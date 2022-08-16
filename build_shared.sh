@@ -41,7 +41,7 @@ for platform in $PLATFORMS; do \
 
                 # In case this is a dirty rebuild, delete all DTBs and DTBOs so that they
                 # won't be erraneously copied from a build for a different device/platform
-                find "$KERNEL_TMP/arch/arm64/boot/dts/{qcom,somc}/" \( -name *.dtb -o -name *.dtbo \) -delete 2>/dev/null || true
+                find "$KERNEL_TMP/arch/arm64/boot/dts/{qcom}/" \( -name *.dtb -o -name *.dtbo \) -delete 2>/dev/null || true
 
                 echo "================================================="
                 echo "Platform -> ${platform} :: Device -> $device"
@@ -70,7 +70,7 @@ for platform in $PLATFORMS; do \
                 if [ $DTBO = "true" ]; then
                     # shellcheck disable=SC2046
                     # note: We want wordsplitting in this case.
-                    $MKDTIMG create "$KERNEL_TOP"/common-kernel/dtbo-${device}.img $(find "$KERNEL_TMP"/arch/arm64/boot/dts/somc/ -name "*.dtbo")
+                    $MKDTIMG create "$KERNEL_TOP"/common-kernel/dtbo-${device}.img $(find "$KERNEL_TMP"/arch/arm64/boot/dts/qcom/ -name "*.dtbo")
                 fi
 
             fi
