@@ -13,10 +13,18 @@ echo "ANDROID_ROOT: ${ANDROID_ROOT}"
 echo "KERNEL_TOP  : ${KERNEL_TOP}"
 echo "KERNEL_TMP  : ${KERNEL_TMP}"
 
+if [ "$use_system_clang" = true ] ; then
+    CROSS_COMPILE="aarch64-linux-gnu-"
+    CROSS_COMPILE_ARM32="arm-none-eabi-"
+else
+    CROSS_COMPILE="aarch64-linux-android-"
+    CROSS_COMPILE_ARM32="arm-linux-androideabi-"
+fi
+
 BUILD_ARGS="${BUILD_ARGS} \
 ARCH=arm64 \
-CROSS_COMPILE=aarch64-linux-android- \
-CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+CROSS_COMPILE=${CROSS_COMPILE} \
+CROSS_COMPILE_ARM32=${CROSS_COMPILE_ARM32} \
 -j$(nproc)"
 
 for platform in $PLATFORMS; do \

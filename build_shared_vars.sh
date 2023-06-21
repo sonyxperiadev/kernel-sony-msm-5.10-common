@@ -15,21 +15,23 @@ find_repo_root()
 usage(){
     cat <<EOF
 Build kernel for supported devices
-Usage: ${0##*/} [-k -p <platform>]
+Usage: ${0##*/} [-k -p <platform> -s]
 
 Options:
 -k              keep kernel tmp after build
 -p <platform>   only build the kernel for <platform>
+-s              use system clang
 EOF
 }
 
 
-arguments=khp:
+arguments=khps:
 while getopts $arguments argument ; do
     case $argument in
         k) keep_kernel_tmp=t ;;
         p) only_build_for=$OPTARG;;
         h) usage; exit 0;;
+        s) use_system_clang=true;;
         ?) usage; exit 1;;
     esac
 done
