@@ -31,6 +31,13 @@ for platform in $PLATFORMS; do \
                 SOCDTB="waipio-v2.dtb"
                 DEVICES="pdx223 pdx224"
                 ;;
+            columbia)
+                COMPRESSED="false"
+                DTBO="true"
+                SOC=parrot
+                SOCDTB="parrot.dtb"
+                DEVICES="pdx246"
+                ;;
         esac
 
         if [ "$COMPRESSED" = "true" ]; then
