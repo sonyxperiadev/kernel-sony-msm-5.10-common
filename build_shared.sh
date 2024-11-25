@@ -24,13 +24,6 @@ for platform in $PLATFORMS; do \
     if [ ! $only_build_for ] || [ $platform = $only_build_for ] ; then
 
         case $platform in
-            nagara)
-                COMPRESSED="false"
-                DTBO="true"
-                SOC=waipio
-                SOCDTB="waipio-v2.dtb"
-                DEVICES="pdx223 pdx224"
-                ;;
             columbia)
                 COMPRESSED="false"
                 DTBO="true"
