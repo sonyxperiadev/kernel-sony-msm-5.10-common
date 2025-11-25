@@ -14,18 +14,14 @@ CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
 -j$(nproc) \
 ${UFDT_APPLY_OVERLAY:+DTC_OVERLAY_TEST_EXT=$UFDT_APPLY_OVERLAY}"
 
-for platform in $PLATFORMS; do \
+for platform in "${!PLATFORMS[@]}"; do
     if [ -z "${only_build_for:-}" ] || [ "$platform" = "${only_build_for:-}" ]; then
-
-        case $platform in
-            columbia)
-                COMPRESSED="false"
-                DTBO="true"
-                SOC=parrot
-                SOCDTB="parrot.dtb"
-                DEVICES="pdx246"
-                ;;
-        esac
+        # Retrieve the platform configuration.
+        # TODO: Currently, there is no validation, and we rely on the assumption that
+        # the associative array contains no errors. This approach is not safe and could
+        # lead to issues if the array is malformed or contains unexpected data.
+        # Validation should be added to ensure data integrity.
+        eval ${PLATFORMS[$platform]}
 
         if [ "${COMPRESSED:-}" = "true" ]; then
             comp=".gz"
