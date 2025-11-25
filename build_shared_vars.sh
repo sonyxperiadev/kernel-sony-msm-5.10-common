@@ -168,7 +168,11 @@ fi
 PLATFORMS="columbia"
 
 # Mkdtimg tool
-MKDTIMG=$ANDROID_ROOT/out/host/linux-x86/bin/mkdtimg
+MKDTIMG=$ANDROID_ROOT/prebuilts/misc/linux-x86/libufdt/mkdtimg
+if [ ! -x "$MKDTIMG" ]; then
+    echo "Error: No mkdtbo executable found. Please check your Android root."
+    exit 1
+fi
 
 KERNEL_TOP=$ANDROID_ROOT/kernel/sony/msm-5.10
 # $KERNEL_TMP sub dir per script
