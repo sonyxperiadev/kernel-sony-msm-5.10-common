@@ -165,8 +165,6 @@ else
     ANDROID_ROOT="$ANDROID_BUILD_TOP"
 fi
 
-PLATFORMS="columbia"
-
 # Mkdtimg tool
 MKDTIMG=$ANDROID_ROOT/prebuilts/misc/linux-x86/libufdt/mkdtimg
 if [ ! -x "$MKDTIMG" ]; then
@@ -186,3 +184,46 @@ KERNEL_TOP=$ANDROID_ROOT/kernel/sony/msm-5.10
 # $KERNEL_TMP sub dir per script
 c=${0##*-}
 KERNEL_TMP=${build_directory:-$ANDROID_ROOT/out/kernel-5.10/${c%%.sh}}
+
+# -------------------------------------------------------------------------
+# Associative Array: PLATFORMS
+# -------------------------------------------------------------------------
+# Description:
+#   PLATFORMS is a Bash associative array that defines build-time
+#   configuration for each supported platform. Each key in the array is a
+#   platform name (e.g., "nagara", "yodo"), and the value is a multi-line
+#   string containing a set of variables required to build the kernel for
+#   that platform.
+#
+#   These variables may include:
+#     - COMPRESSED: Whether the kernel image should be compressed (true/false)
+#     - DTBO:       Whether a DTBO image should be generated (true/false)
+#     - SOC:        The SoC identifier used by the platform
+#     - SOCDTB:     The base SoC .dtb filename
+#     - DEVICES:    List of device identifiers belonging to the platform
+#
+# Usage:
+#   To load a platform’s configuration into the environment for use:
+#
+#       eval "${PLATFORMS[$platform_name]}"
+#
+#   Example:
+#       platform="yodo"
+#       eval "${PLATFORMS[$platform]}"
+#       echo "Building for SoC: $SOC"
+#
+# Notes:
+#   - Values are stored as plain multi-line strings. `eval` is required to
+#     turn them into variables in the current environment.
+#   - New platforms can be added by extending the PLATFORMS array with a new
+#     key and its configuration block.
+# -------------------------------------------------------------------------
+declare -A PLATFORMS=(
+    ['columbia']="
+        COMPRESSED=false
+        DTBO=true
+        SOC='parrot'
+        SOCDTB='parrot.dtb'
+        DEVICES='pdx246'
+    "
+)
